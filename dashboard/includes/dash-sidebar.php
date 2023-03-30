@@ -62,7 +62,7 @@
                     <span>Dashboard</span>
                 </li>
                 <li class="mm-active">
-                    <a class="has-arrow" href="#" aria-expanded="false">
+                    <a class="has-arrow" href="index.php" aria-expanded="false">
 
                         <img src="../assets/dash-img/menu-icon/1.svg" alt="">
                         <span>Dashboard</span>
@@ -75,7 +75,7 @@
                         <span>Task</span>
                     </a>
                     <ul>
-                        <li><a href="addtask.php">Add Taskx</a></li>
+                        <li><a href="addtask.php">Add Task</a></li>
                         <li><a href="viewtask.php">View Task</a></li>
                         <li><a href="#">More</a></li>
                     </ul>
@@ -117,18 +117,18 @@
 
 
                                         <?php        
-                            $time = date("H");
-                            $time_zone = date("e");
-                            if ($time < 12) {
-                                echo "Good Morning";
-                            }elseif($time >= 12 && $time < 16){
-                               echo  "Good Afternoon";
-                            }elseif($time >= 16 or $time < 19 ){
-                                echo "Good Evening";
-                            }else{
-                                echo "Good Night";
-                            }
-                    ?>
+                                            $time = date("H");
+                                            $time_zone = date("e");
+                                            if ($time < 12) {
+                                            echo "Good Morning";
+                                            }elseif($time >= 12 && $time < 16){
+                                            echo  "Good Afternoon";
+                                            }elseif($time >= 16 or $time < 19 ){
+                                            echo "Good Evening";
+                                            }else{
+                                            echo "Good Night";
+                                            }
+                                        ?>
 
                                         <h5><?php echo $user_data['user_name']; ?></h5>
                                         <div class="profile_info_details">

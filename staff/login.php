@@ -6,8 +6,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <!-- Mirrored from colorlib.com/etc/lf/Login_v3/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 27 Mar 2023 21:38:24 GMT -->
-
     <head>
         <title>Jama Login</title>
         <meta charset="UTF-8">
@@ -157,7 +155,7 @@
                 </div>
             </div>
         </div>
-		
+
         <div id="dropDownSelect1"></div>
 
         <script src="vendor/jquery/jquery-3.2.1.min.js"></script>

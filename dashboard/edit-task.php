@@ -3,30 +3,41 @@
     include_once "includes/conn.php";
     include_once "includes/loginsession.php";
     include_once "includes/dash-sidebar.php";
-
- 
-  if(isset($_POST['submit'])){
-    $taskassignto = mysqli_real_escape_string($conn, $_POST['assigned_to']);
-    $taskcontent = mysqli_real_escape_string($conn, $_POST['task-name']);
-    $startdate = mysqli_real_escape_string($conn, $_POST['date-start']);
-    $enddate = mysqli_real_escape_string($conn, $_POST['date-end']);
-    //print_r($_POST) or die();
-  if(empty($taskassignto) or empty($taskcontent) or empty($startdate) or empty($enddate)){
-        $msg = "<div class='alert alert-success'>Fill all fields please </div>";
-        
-  }else{
-      $queryTask = mysqli_query($conn, "INSERT INTO sys_task (assigned_to, task_name, date_started, date_end) 
-      VALUES ('$taskassignto', '$taskcontent', '$startdate', '$enddate')");
-      if($queryTask){
-      $msg = "<div style= 'alert alert-success'>Successfully Posted</div>";
-
-      }else{
-      $msg = "<div class='alert alert-success'>Couldn't post at the moment. Try again! </div>";   
-  }
-}
-}
-  
 ?>
+
+<?php
+    if(isset($_GET['editId'])){
+    $editId = $_GET['editId'];
+    $editQuery = mysqli_query($conn, "SELECT * FROM sys_task  WHERE task_id = '$editId'"); 
+    if(mysqli_num_rows($editQuery)>0){
+        $editResult = mysqli_fetch_assoc($editQuery);
+    }else{
+        header("location: view-task.php");
+    }
+}else{
+    header("location: view-task.php");
+}
+
+
+
+ if(isset($_POST['update'])){
+    $assigned = mysqli_real_escape_string($conn, $_POST['assigned_to']); 
+    $datestart = mysqli_real_escape_string($conn, $_POST['date-start']);
+    $dateend = mysqli_real_escape_string($conn, $_POST['date-end']);
+    $taskname = mysqli_real_escape_string($conn, $_POST['task-name']);
+    //print_r($_POST['update']) or die();
+        $query = mysqli_query($conn, "UPDATE sys_task set assigned_to = '$assigned', date_started = '$datestart', date_end = '$dateend', task_name = '$taskname' where task_id = '$editId' ");
+         //die(mysqli_error($conn));
+            if($query){
+                $msg =  "<div class='alert alert-success'>Task Successfully Edited </div>";
+                
+            }else{
+                $msg =  "<div class='alert alert-success'>System Error, Try again! </div>";
+            }
+        }
+
+    ?>
+
 
 
 <div class="main_content_iner ">
@@ -39,7 +50,7 @@
 
                             <div class="modal-content cs_modal">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Create A Task</h5>
+                                    <h5 class="modal-title">Edit Task</h5>
                                 </div>
 
                                 <?php
@@ -82,16 +93,21 @@
                                                 min="<?php echo date('Y-m-d'); ?>">
                                         </div>
 
+                                        <?php
+                                                    $queryAssign = mysqli_query($conn, "SELECT * FROM sys_task"); 
+                                                    $rowsAssign = mysqli_fetch_array($queryAssign)
+                                                ?>
                                         Enter Task<textarea name="task-name" id="" cols="30" rows="10"
-                                            class="form-control" class="mb-3" placeholder=""> </textarea>
+                                            class="form-control" class="mb-3"
+                                            placeholder=""><?php echo $rowsAssign['task_name'];?> </textarea>
 
 
                                         <div class="cs_check_box">
                                             <input type="checkbox" id="check_box" class="common_checkbox">
                                         </div>
 
-                                        <input type="submit" name="submit"
-                                            class="btn_1 full_width text-center form-control">
+                                        <input type="submit" name="update"
+                                            class=" btn_1 full_width text-center form-control">
                                         <div class="text-center">
 
 

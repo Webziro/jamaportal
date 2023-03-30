@@ -19,7 +19,12 @@
 
 <!--Table starts here!-->
 
-
+<?php
+    if(isset($_SESSION['msg'])){
+        echo $_SESSION['msg'];
+        unset($_SESSION['msg']);
+    }
+?>
 <div class="main_content_iner ">
     <div class="container-fluid p-0">
         <div class="row justify-content-center">
@@ -51,9 +56,10 @@
                                 <tr>
                                     <th scope="col">Task Title</th>
                                     <th scope="col">Assigned To</th>
-                                    <th scope="col">Date Created</th>
+                                    <th scope="col">Date Started</th>
+                                    <th scope="col">Date to Complete </th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Remark</th>
+                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,12 +76,35 @@
                                     </th>
                                     <td><?php echo $rowTable['assigned_to'];?></td>
 
-                                    <td><?php echo $rowTable['date_created'];?></td>
+                                    <td><?php echo $rowTable['date_started'];?></td>
+
+                                    <td><?php echo $rowTable['date_end'];?></td>
 
 
-                                    <td><a href="#" class="status_btn">
-                                            <?php echo $rowTable['task_status'];?>
+                                    <td><a href="#" class="">
+
+                                            <select id="status" name="status">
+                                                <option value=" pending"> <?php echo $rowTable['task_status'];?>
+                                                </option>
+                                                <option value="processing">
+                                                    <?php echo $rowTable['task_status'];?>
+                                                </option>
+                                                <option value="approval"><?php echo $rowTable['task_status'];?></option>
+                                            </select>
                                     </td></a>
+
+                                    <td class="status_btn">
+
+                                        <a href="delete-task.php?deleteId=<?php echo $rowTable['task_id'];?>">
+                                            <option value="delete">Delete</option>
+                                        </a>
+                                        <a href="edit-task.php?editId=<?php echo $rowTable['task_id'];?>">
+                                            <option value="edit">Edit</option>
+                                        </a>
+
+                                    </td>
+
+
                                 </tr>
 
                                 <?php }?>
