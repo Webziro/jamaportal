@@ -63,7 +63,6 @@
                                     <th scope="col">Task Title</th>
                                     <th scope="col">Date Started</th>
                                     <th scope="col">Date to Complete </th>
-                                    <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -100,16 +99,6 @@
                                             </select>
                                     </td></a>
 
-                                    <td class="status_btn">
-
-                                        <a href="delete-task.php?deleteId=<?php echo $rowTable['task_id'];?>">
-                                            <option value="delete">Delete</option>
-                                        </a>
-                                        <a href="edit-task.php?editId=<?php echo $rowTable['task_id'];?>">
-                                            <option value="edit">Edit</option>
-                                        </a>
-
-                                    </td>
 
 
                                 </tr>

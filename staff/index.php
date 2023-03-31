@@ -114,12 +114,18 @@
                     <div class="Activity_timeline">
                         <ul>
 
+                            <?php
+								$recentQuery = mysqli_query($conn, "SELECT * FROM sys_task WHERE id = '$si' ");
+								while($row = mysqli_fetch_array($recentQuery)){
+
+							?>
                             <li>
                                 <div class="activity_bell"></div>
                                 <div class="activity_wrap">
-                                    <h6>5 min ago</h6>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque
+                                    <h6><?php echo $row['date_started'];?></h6>
+                                    <p><?php echo $row['task_name']; ?>
                                     </p>
+                                    <?php } ?>
                                 </div>
                             </li>
                         </ul>
@@ -134,7 +140,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer_iner text-center">
-                                <p>2020 © Jamasoft Concept <a href="#"> <i class="ti-heart"></i> </a><a href="#">
+                                <p>2023 © Jamasoft Concept <a href="#"> <i class="ti-heart"></i> </a><a href="#">
                                         Dashboard</a></p>
                             </div>
                         </div>

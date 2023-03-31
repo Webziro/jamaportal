@@ -3,6 +3,22 @@
     include_once "includes/conn.php";
     include_once "includes/loginsession.php";
     include_once "includes/dash-sidebar.php";
+
+    if(isset($_POST['submit'])){           
+
+        $search = mysqli_real_escape_string($conn, $_POST['search']);
+        if(empty($search) or strlen($search)<10 or (preg_match('/[^a-z0-9 ]+/i', $search))){
+            
+        $msg = "<div class='alert alert-danger'>Input a valid value with more than 10 characters!</div>";
+        
+        }else{ 
+            $querysearch = mysqli_query($conn, "SELECT * FROM sys_task WHERE task_name LIKE '%{$search}%' OR date_started LIKE '%{$search}%' OR date_end LIKE '%{$search}%' OR task_status LIKE '%{$search}%' OR assigned_to LIKE '%{$search}%' ") or die(mysqli_error($conn));    
+        }
+    }else{
+        $msg  = "<div class='alert alert-success'>No result found!</div>";
+        
+    }
+                                
 ?>
 
 
@@ -20,10 +36,7 @@
 <!--Table starts here!-->
 
 <?php
-    if(isset($_SESSION['msg'])){
-        echo $_SESSION['msg'];
-        unset($_SESSION['msg']);
-    }
+    
     date_default_timezone_set("Africa/Lagos");
     $current_date=date('Y-m-d');
     $query =  mysqli_query($conn, "select * from sys_log where user_id = '$id' order by log_id desc");
@@ -43,24 +56,24 @@
                         <div class="box_right d-flex lms_block">
                             <div class="serach_field_2">
                                 <div class="search_inner">
-
-                                    <form Active="#" action="searchtask.php" method="POST">
-                                        <div class="search_field">
-                                            <input type="text" name="search" placeholder="Search content here...">
-                                        </div>
-                                        <button type="search" name="submit"> <i class="ti-search"></i> </button>
-                                    </form>
                                 </div>
-                            </div>
-                            <div class="add_button ms-2">
-                                <button data-bs-toggle="modal" data-bs-target="#addcategory" type="search" name="submit"
-                                    class="btn_1">Search
-                                    Task</button>
                             </div>
                         </div>
                     </div>
+
                     <div class="QA_table mb_30">
 
+                        <?php
+                            if(isset($_SESSION['msg'])){
+                            echo $_SESSION['msg'];
+                            unset($_SESSION['msg']);
+                        }
+
+                        if(isset($msg)){
+                            echo($msg);
+                            unset($msg);
+                        }
+                    ?>
                         <table class="table lms_table_active">
                             <thead>
                                 <tr>
@@ -72,47 +85,48 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php          
-                                
-                                    $queryTable = mysqli_query($conn, "SELECT * FROM sys_task join sys_users"); 
-                                    while($rowTable = mysqli_fetch_array($queryTable)){
+                                <?php 
+                                    if(isset($querysearch)){
+                                        
+                                    if(mysqli_num_rows($querysearch)>0){
+                                    while ($rowSearch = mysqli_fetch_array($querysearch)){
                                 ?>
                                 <tr>
 
 
                                 <tr>
                                     <th scope="row"> <a href="#"
-                                            class="question_content"><?php echo $rowTable['task_name'];?> </a>
+                                            class="question_content"><?php echo $rowSearch['task_name'];?> </a>
                                     </th>
 
 
-                                    <td><?php echo $rowTable['date_started'];?></td>
+                                    <td><?php echo $rowSearch['date_started'];?></td>
 
-                                    <td><?php echo $rowTable['date_end'];?></td>
+                                    <td><?php echo $rowSearch['date_end'];?></td>
 
 
                                     <td><a href="#" class="">
 
                                             <select id="status" name="status">
-                                                <option <?php if($rowTable['task_status']=='P'){ echo 'selected'; } ?>
+                                                <option <?php if($rowSearch['task_status']=='P'){ echo 'selected'; } ?>
                                                     value="P"> Pending
                                                 </option>
-                                                <option <?php if($rowTable['task_status']=='PR'){ echo 'selected'; } ?>
+                                                <option <?php if($rowSearch['task_status']=='PR'){ echo 'selected'; } ?>
                                                     value="PR">Processing
                                                 </option>
-                                                <option <?php if($rowTable['task_status']=='A'){ echo 'selected'; } ?>
+                                                <option <?php if($rowSearch['task_status']=='A'){ echo 'selected'; } ?>
                                                     value="A">Approved</option>
                                             </select>
                                     </td></a>
 
                                     <td>
-                                        <?php echo $rowTable['assigned_to'];?>
+                                        <?php echo $rowSearch['assigned_to'];?>
                                     </td>
 
 
                                 </tr>
 
-                                <?php }?>
+                                <?php } } } ?>
                             </tbody>
                         </table>
                     </div>
