@@ -3,6 +3,7 @@
     include_once "includes/conn.php";
     include_once "includes/loginsession.php";
     include_once "includes/dash-sidebar.php";
+ 
 ?>
 
 
@@ -23,14 +24,6 @@
     if(isset($_SESSION['msg'])){
         echo $_SESSION['msg'];
         unset($_SESSION['msg']);
-    }
-    date_default_timezone_set("Africa/Lagos");
-    $current_date=date('Y-m-d');
-    $query =  mysqli_query($conn, "select * from sys_log where user_id = '$id' order by log_id desc");
-    $result = mysqli_fetch_array($query);
-    $logDate = substr($result['login_time'], 0, 10); 
-    if(($logDate==$current_date) && ($result['logout_time']=='')){
-        echo "<div class='alert alert-success'>You're  Currently Logged in! </div>";
     }
 ?>
 <div class="main_content_iner ">
@@ -63,50 +56,38 @@
                         <table class="table lms_table_active">
                             <thead>
                                 <tr>
-                                    <th scope="col">Task Title</th>
-                                    <th scope="col">Date Started</th>
-                                    <th scope="col">Date to Complete </th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Assigned To </th>
+                                    <th scope="col">Today's Date</th>
+                                    <th scope="col">Time Checked in</th>
+                                    <th scope="col">Time Checked Out </th>
+                                    <th scope="col">Time Diffrence</th>
+                                    <th scope="col">Day Abscent</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php                                            
-                                    $queryTable = mysqli_query($conn, "SELECT * FROM sys_task"); 
-                                    while($rowTable = mysqli_fetch_array($queryTable)){
+                                    $querytimelog = mysqli_query($conn, "SELECT * FROM sys_log where user_id = '$id'"); 
+                                    while($rowTime = mysqli_fetch_array($querytimelog)){
                                 ?>
                                 <tr>
 
 
                                 <tr>
-                                    <th scope="row"> <a href="#"
-                                            class="question_content"><?php echo $rowTable['task_name'];?> </a>
+                                    <th scope="row">
+                                        <a href="#" class="question_content"><?php echo date('Y:m:d'); ?>
+                                        </a>
                                     </th>
 
 
-                                    <td><?php echo $rowTable['date_started'];?></td>
+                                    <td><?php echo $rowTime['login_time'];?></td>
 
-                                    <td><?php echo $rowTable['date_end'];?></td>
+                                    <td><?php echo $rowTime['logout_time'];?></td>
 
-
-                                    <td><a href="#" class="">
-
-                                            <select id="status" name="status">
-                                                <option <?php if($rowTable['task_status']=='P'){ echo 'selected'; } ?>
-                                                    value="P"> Pending
-                                                </option>
-                                                <option <?php if($rowTable['task_status']=='PR'){ echo 'selected'; } ?>
-                                                    value="PR">Processing
-                                                </option>
-                                                <option <?php if($rowTable['task_status']=='A'){ echo 'selected'; } ?>
-                                                    value="A">Approved</option>
-                                            </select>
-                                    </td></a>
-
-                                    <td>
-                                        <?php echo $rowTable['assigned_to'];?>
-                                    </td>
-
+                                    <td><?php 
+                                        $d1 = new DateTime($rowTime['login_time']);
+                                        $d2 = new DateTime($rowTime['logout_time']);
+                                        $interval = $d1->diff($d2);
+                                        echo $interval->h." hour(s)";
+                                        ?></td>
 
                                 </tr>
 
@@ -208,5 +189,7 @@
 <script src="vendors/apex_chart/bar_active_1.js"></script>
 <script src="vendors/apex_chart/apex_chart_list.js"></script>
 </body>
+
+<!-- Mirrored from demo.dashboardpack.com/hospital-html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Mar 2023 11:45:05 GMT -->
 
 </html>

@@ -1,8 +1,8 @@
 <?php
     session_start();
-    include_once "includes/conn.php";
-    include_once "includes/loginsession.php";
-    include_once "includes/dash-sidebar.php";
+    include_once "../dashboard/includes/conn.php";
+    include_once "staffsession.php";
+    include_once "staff-side.php";
 
  
   if(isset($_POST['submit'])){
@@ -57,7 +57,7 @@
                                             Task assigned to
                                             <select type="text" class="form-control" name="assigned_to">
                                                 <?php
-                                                    $queryAssign = mysqli_query($conn, "SELECT * FROM sys_users where roles != 'admin'"); 
+                                                    $queryAssign = mysqli_query($conn, "SELECT * FROM sys_users"); 
                                                     //die(mysqli_error($conn));
                                                     while($rowsAssign = mysqli_fetch_array($queryAssign)){
                                                 ?>

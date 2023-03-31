@@ -1,20 +1,17 @@
 <?php
     session_start();
-    include_once "includes/conn.php";
-    include_once "includes/loginsession.php";
-    include_once "includes/dash-sidebar.php";
+    include_once "../dashboard/includes/conn.php";
+    include_once "staffsession.php";
+    include_once "staff-side.php";
 ?>
 
 
-
 </div>
 </div>
 </div>
 </div>
 </div>
 </div>
-
-<!-- End of  Task Loop-->
 
 
 <!--Table starts here!-->
@@ -25,9 +22,9 @@
         unset($_SESSION['msg']);
     }
     date_default_timezone_set("Africa/Lagos");
-    $current_date=date('Y-m-d');
-    $query =  mysqli_query($conn, "select * from sys_log where user_id = '$id' order by log_id desc");
-    $result = mysqli_fetch_array($query);
+    $current_date = date('Y-m-d');
+    $query =  mysqli_query($conn, "select * from sys_log where user_id = '$sid' order by log_id desc"); 
+    $result = mysqli_fetch_array($query);   
     $logDate = substr($result['login_time'], 0, 10); 
     if(($logDate==$current_date) && ($result['logout_time']=='')){
         echo "<div class='alert alert-success'>You're  Currently Logged in! </div>";
@@ -67,12 +64,12 @@
                                     <th scope="col">Date Started</th>
                                     <th scope="col">Date to Complete </th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Assigned To </th>
+                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php                                            
-                                    $queryTable = mysqli_query($conn, "SELECT * FROM sys_task"); 
+                                    $queryTable = mysqli_query($conn, "SELECT * FROM sys_task where assigned_to = '$sid'"); 
                                     while($rowTable = mysqli_fetch_array($queryTable)){
                                 ?>
                                 <tr>
@@ -103,8 +100,15 @@
                                             </select>
                                     </td></a>
 
-                                    <td>
-                                        <?php echo $rowTable['assigned_to'];?>
+                                    <td class="status_btn">
+
+                                        <a href="delete-task.php?deleteId=<?php echo $rowTable['task_id'];?>">
+                                            <option value="delete">Delete</option>
+                                        </a>
+                                        <a href="edit-task.php?editId=<?php echo $rowTable['task_id'];?>">
+                                            <option value="edit">Edit</option>
+                                        </a>
+
                                     </td>
 
 
