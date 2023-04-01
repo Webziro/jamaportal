@@ -108,22 +108,30 @@
                 <div class="white_box card_height_100">
                     <div class="box_header border_bottom_1px  ">
                         <div class="main-title">
-                            <h3 class="mb_25">Recent Task</h3>
+                            Today is <h3 class="mb_25"> <?= date("D-M-d");?> You have the following Recent Task</h3>
+
                         </div>
                     </div>
                     <div class="Activity_timeline">
                         <ul>
 
                             <?php
-								$recentQuery = mysqli_query($conn, "SELECT * FROM sys_task WHERE id = '$si' ");
-								while($row = mysqli_fetch_array($recentQuery)){
+								
+							$recentQuery = mysqli_query($conn, "SELECT * FROM sys_tasK WHERE assigned_to = '$sid'");
+							// if (!$recentQuery) {
+							// 	echo ('Error'. mysqli_error($conn));
+							// 	exit();
+							// }
+							while ($rowrecent = mysqli_fetch_array($recentQuery)) {
+			
 
 							?>
                             <li>
                                 <div class="activity_bell"></div>
                                 <div class="activity_wrap">
-                                    <h6><?php echo $row['date_started'];?></h6>
-                                    <p><?php echo $row['task_name']; ?>
+                                    <h6><?php echo substr( $rowrecent['date_started'], 0, 16 );?></h6>
+
+                                    <p><?php echo $rowrecent['task_name']; ?>
                                     </p>
                                     <?php } ?>
                                 </div>

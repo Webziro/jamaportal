@@ -6,7 +6,7 @@
     date_default_timezone_set("Africa/Lagos");
     $current_time = date('Y-m-d H:i:s');
     $current_date=date('Y-m-d');
-    $query =  mysqli_query($conn, "select * from sys_log where user_id = '$id' order by log_id desc");
+    $query =  mysqli_query($conn, "select * from sys_log where user_id = '$sid' order by log_id desc");
     $result = mysqli_fetch_array($query);
     $logDate = substr($result['login_time'], 0, 10); 
     $logid=$result['log_id'];

@@ -74,7 +74,7 @@
                             <tbody>
                                 <?php          
                                 
-                                    $queryTable = mysqli_query($conn, "SELECT * FROM sys_task join sys_users"); 
+                                    $queryTable = mysqli_query($conn, "SELECT * FROM sys_task "); 
                                     while($rowTable = mysqli_fetch_array($queryTable)){
                                 ?>
                                 <tr>

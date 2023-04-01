@@ -1,6 +1,7 @@
 <?php
     include_once "includes/conn.php";
     include_once "includes/loginsession.php";
+    include_once "includes/properties.php";
 ?>
 
 
@@ -78,35 +79,7 @@
                         <li><a href="addtask.php">Add Task</a></li>
                         <li><a href="viewtask.php">View Task</a></li>
 
-                        <li><a href="timelog.php">Time Log</a></li> <br><br><br><br><br><br><br><br><br><br>
-
-
-                        <button style="padding-right:40px; 
-                            padding-left:20px;
-                            border-radius:none;
-                            color: #fff;
-                            border:none;
-                            border-radius:10px;
-                            background-color:#90EE99; 
-                            
-                             " id="show" value="show">
-                            <li><a href="checkin.php">Check-in</a></li>
-                        </button>
-
-
-                        <button style="padding-right:40px; 
-                            padding-left:20px;
-                            margin-top:12px;
-                            border-radius:none;
-                            color: white !important;
-                            border:none;
-                            border-radius:10px;
-                            background-color:red; 
-                       " id="hide" value="hide">
-                            <li><a href="checkout.php?cId=<?php ?>">CheckOut</a></li>
-
-                        </button>
-
+                        <li><a href="timelog.php">Time Log</a>
 
 
                     </ul>

@@ -1,6 +1,7 @@
 <?php
     include_once "../dashboard/includes/conn.php";
     include_once "staffsession.php";
+    include_once "../dashboard/includes/properties.php";
 ?>
 
 
@@ -141,8 +142,6 @@
                                 <div class="profile_info">
                                     <img src="../assets/dash-img/client_img.png" alt="#">
                                     <div class="profile_info_iner">
-                                        <p><?php echo $user_data['department']; ?></p>
-
 
                                         <?php        
                                             $time = date("H");
@@ -157,8 +156,8 @@
                                             echo "Good Night";
                                             }
                                         ?>
-
                                         <h5><?php echo $user_data['user_name']; ?></h5>
+                                        <h5> <?php echo $user_data['department']; ?> Developer</h5>
                                         <div class="profile_info_details">
                                             <a href="#">My Profile <i class="ti-user"></i></a>
 
