@@ -57,7 +57,7 @@
                                             Task assigned to
                                             <select type="text" class="form-control" name="assigned_to">
                                                 <?php
-                                                    $queryAssign = mysqli_query($conn, "SELECT * FROM sys_users where roles != 'admin'"); 
+                                                    $queryAssign = mysqli_query($conn, "SELECT * FROM sys_users where roles != 'admin' && _status ='unsuspend'"); 
                                                     //die(mysqli_error($conn));
                                                     while($rowsAssign = mysqli_fetch_array($queryAssign)){
                                                 ?>

@@ -7,7 +7,7 @@ if(isset($_POST['submit'])){
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
   
-    $query = mysqli_query($conn, "SELECT * FROM sys_users WHERE user_name = '$username' && user_password = '$password' ");
+    $query = mysqli_query($conn, "SELECT * FROM sys_users WHERE user_name = '$username' && user_password = '$password' && _status = 'unsuspend' ");
     
     //  die(mysqli_error($conn));
     if(mysqli_num_rows($query)>0){
@@ -20,7 +20,7 @@ if(isset($_POST['submit'])){
             }
         
     }else{
-        $_SESSION ['msg'] = "<div style = 'background-color: white; color: red; padding: 12px;'>Incorrect Username/password!</div>";
+        $_SESSION ['msg'] = "<div style = 'background-color: white; color: red; padding: 12px;'>Incorrect Username/password/suspended account!</div>";
         header("location:../login.php");
     }
 }else{

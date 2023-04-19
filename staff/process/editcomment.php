@@ -3,25 +3,34 @@
     include_once "../dashboard/includes/conn.php";
     include_once "staffsession.php";
     include_once "staff-side.php";
-?>
-
-
-<!--Table starts here!-->
-
-<?php
-    if(isset($_SESSION['msg'])){
-        echo $_SESSION['msg'];
-        unset($_SESSION['msg']);
+    if(isset($_GET['editId'])){
+    $editId = $_GET['editId'];
+    $editQuery = mysqli_query($conn, "SELECT * FROM comments  WHERE taskid = '$editId'"); 
+    if(mysqli_num_rows($editQuery)>0){
+        $editResult = mysqli_fetch_assoc($editQuery);
+    }else{
+        header("location: view-task.php");
     }
-    date_default_timezone_set("Africa/Lagos");
-    $current_date = date('Y-m-d');
-    $query =  mysqli_query($conn, "select * from sys_log where user_id = '$sid' order by log_id desc"); 
-    $result = mysqli_fetch_array($query);   
-    $logDate = substr($result['login_time'], 0, 10); 
-    if(($logDate==$current_date) && ($result['logout_time']=='')){
-        echo "<div class='alert alert-success'>You're  Currently Logged in! </div>";
-    }
-?>
+}else{
+    header("location: view-task.php");
+}
+
+
+
+ if(isset($_POST['update'])){
+    $comment = mysqli_real_escape_string($conn, $_POST['comment']); 
+    //print_r($_POST['update']) or die();
+        $query = mysqli_query($conn, "UPDATE comments set comment = '$comment' where taskid = '$editId' ");
+         //die(mysqli_error($conn));
+            if($query){
+                $msg =  "<div class='alert alert-success'>Task Successfully Edited </div>";
+                
+            }else{
+                $msg =  "<div class='alert alert-success'>System Error, Try again! </div>";
+            }
+        }
+
+    ?>
 <div class="main_content_iner ">
     <div class="container-fluid p-0">
         <div class="row justify-content-center">
@@ -33,7 +42,7 @@
                             <div class="serach_field_2">
                                 <div class="search_inner">
 
-                                    <form Active="#" action="searchtask.php" method="POST">
+                                    <form Active="#" action="" method="POST">
                                         <div class="search_field">
                                             <input type="text" name="search" placeholder="Search content here...">
                                         </div>
@@ -56,8 +65,10 @@
                                     <th scope="col">Date Started</th>
                                     <th scope="col">Date to Complete </th>
                                     <th scope="col">Action</th>
+                                    <th scope="col">Rating</th>
                                     <th scope="col"> Add Comments</th>
                                     <th scope="col">Comments</th>
+                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -94,13 +105,27 @@
                                     </td></a>
 
                                     <td>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <style>
+                                        .checked {
+                                            color: red;
+                                        }
+                                        </style>
+                                    </td>
+
+                                    <td>
                                         <!-- Button to Open the Modal -->
+
                                         <form action="addcomment.php" method="POST">
                                             <!-- <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                                 data-bs-target="#myModal"> -->
                                             <button type="button" class="btn btn-info"
                                                 onclick="commentModal(<?= $rowTable['task_id'] ?>)">
-                                                Add Cooment
+                                                Add comment
                                             </button>
 
                                             <!-- The Modal -->
@@ -119,7 +144,7 @@
                                                             <textarea name="comments" id="" cols="60" rows="6"
                                                                 placeholder="Enter text"></textarea>
 
-                                                            <input type="submit" name="submit">
+                                                            <input type="submit" name="update">
                                                         </div>
 
                                                         <!-- Modal footer -->
@@ -132,17 +157,26 @@
                                                 </div>
                                             </div>
                                         </form>
-                                    <td class="row">
+                                    <td>
                                         <?php
-                                        $no = 1; 
+                                        $no = 1;
                                         $i=$rowTable['task_id']; 
                                         $c=mysqli_query($conn, "SELECT * FROM comments where taskid = '$i'");
                                         while($row=mysqli_fetch_assoc($c)){
-                                            print $no.'. '.$row['comment']; ?>
-
-                                        <?php
-                                            $no=$no+1; 
+                                            print $no.'. '.$row['comment'].'<br>';
+                                            $no=$no+1;
                                         } ?>
+                                    </td>
+
+                                    <td class="row">
+                                        <div class="col-5">
+                                            <a href="process/editcomment.php"><button type="button"
+                                                    class="btn btn-primary btn-sm ">Edit</button></a>
+                                        </div>
+
+                                        <div class="col-6">
+                                            <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                        </div>
                                     </td>
                                 </tr>
 

@@ -13,14 +13,14 @@
         echo $_SESSION['msg'];
         unset($_SESSION['msg']);
     }
-    date_default_timezone_set("Africa/Lagos");
-    $current_date = date('Y-m-d');
-    $query =  mysqli_query($conn, "select * from sys_log where user_id = '$sid' order by log_id desc"); 
-    $result = mysqli_fetch_array($query);   
-    $logDate = substr($result['login_time'], 0, 10); 
-    if(($logDate==$current_date) && ($result['logout_time']=='')){
-        echo "<div class='alert alert-success'>You're  Currently Logged in! </div>";
-    }
+    // date_default_timezone_set("Africa/Lagos");
+    // $current_date = date('Y-m-d');
+    // $query =  mysqli_query($conn, "select * from sys_log where user_id = '$sid' order by log_id desc"); 
+    // $result = mysqli_fetch_array($query);   
+    // $logDate = substr($result['login_time'], 0, 10); 
+    // if(($logDate==$current_date) && ($result['logout_time']=='')){
+    //     echo "<div class='alert alert-success'>You're  Currently Logged in! </div>";
+    // }
 ?>
 <div class="main_content_iner ">
     <div class="container-fluid p-0">
@@ -53,89 +53,31 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Task Title</th>
+                                    <th scope="col">Comments</th>
                                     <th scope="col">Date Started</th>
                                     <th scope="col">Date to Complete </th>
-                                    <th scope="col">Action</th>
-                                    <th scope="col"> Add Comments</th>
-                                    <th scope="col">Comments</th>
+                                    <th scope="col">Rating</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php                                            
-                                    $queryTable = mysqli_query($conn, "SELECT * FROM sys_task where assigned_to = '$sid'");
-                                    while($rowTable = mysqli_fetch_array($queryTable)){
+                                    $querycomplete= mysqli_query($conn, "SELECT * FROM sys_task where assigned_to = '$sid' && task_status = 'A'") or die(mysqli_error($conn));
+                                    while($rowcomplete = mysqli_fetch_array($querycomplete)){
                                 ?>
                                 <tr>
 
 
                                 <tr>
+
                                     <th scope="row"> <a href="#"
-                                            class="question_content"><?php echo $rowTable['task_name'];?> </a>
+                                            class="question_content"><?php echo $rowcomplete['task_name'];?> </a>
                                     </th>
 
 
-                                    <td><?php echo $rowTable['date_started'];?></td>
-
-                                    <td><?php echo $rowTable['date_end'];?></td>
-
-
-                                    <td><a href="#" class="">
-
-                                            <select id="status" name="status">
-                                                <option <?php if($rowTable['task_status']=='P'){ echo 'selected'; } ?>
-                                                    value="P"> Pending
-                                                </option>
-                                                <option <?php if($rowTable['task_status']=='PR'){ echo 'selected'; } ?>
-                                                    value="PR">Processing
-                                                </option>
-                                                <option <?php if($rowTable['task_status']=='A'){ echo 'selected'; } ?>
-                                                    value="A">Approved</option>
-                                            </select>
-                                    </td></a>
-
-                                    <td>
-                                        <!-- Button to Open the Modal -->
-                                        <form action="addcomment.php" method="POST">
-                                            <!-- <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                data-bs-target="#myModal"> -->
-                                            <button type="button" class="btn btn-info"
-                                                onclick="commentModal(<?= $rowTable['task_id'] ?>)">
-                                                Add Cooment
-                                            </button>
-
-                                            <!-- The Modal -->
-                                            <div class="modal" id="myModal">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-body">
-                                                            <input type="number" hidden id="taskid" name="taskid">
-                                                        </div>
-
-                                                        <!-- Modal body -->
-                                                        <div class="modal-body">
-                                                            <h6 class="modal-title">Message</h6>
-                                                            <textarea name="comments" id="" cols="60" rows="6"
-                                                                placeholder="Enter text"></textarea>
-
-                                                            <input type="submit" name="submit">
-                                                        </div>
-
-                                                        <!-- Modal footer -->
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-danger"
-                                                                data-bs-dismiss="modal">Close</button>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
                                     <td class="row">
                                         <?php
                                         $no = 1; 
-                                        $i=$rowTable['task_id']; 
+                                        $i=$rowcomplete['task_id']; 
                                         $c=mysqli_query($conn, "SELECT * FROM comments where taskid = '$i'");
                                         while($row=mysqli_fetch_assoc($c)){
                                             print $no.'. '.$row['comment']; ?>
@@ -144,6 +86,74 @@
                                             $no=$no+1; 
                                         } ?>
                                     </td>
+
+                                    <td><?php echo $rowcomplete['date_started'];?></td>
+
+                                    <td><?php echo $rowcomplete['date_end'];?></td>
+
+                                    <td><?php
+                                        $taskid = $rowcomplete['task_id'];
+                                        $querystar = mysqli_query($conn, "SELECT * from sys_rating where task = $taskid order by rating_id desc limit 1");
+                                        if(mysqli_num_rows($querystar)>0){
+                                        $rowrating = mysqli_fetch_array($querystar);
+                                        switch($rowrating['rating_num']){
+                                            case 0:
+                                                echo '<span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>';
+                                            break;
+
+                                        case 1:
+                                            echo '<span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star "></span>
+                                        <span class="fa fa-star "></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>';
+                                        
+                                            break;
+                                        case 2: 
+                                            echo '<span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>';
+                                            break;
+                                        case 3:
+                                            echo '<span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>';
+                                            break;
+                                        case 4:
+                                            echo '<span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star"></span>';
+                                            break;
+                                        case 5:
+                                            echo '<span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>';
+                                            break;
+
+                                        }
+                                    ?>
+
+                                        <style>
+                                        .checked {
+                                            color: red;
+                                        }
+                                        </style><?php }else{ echo "No rating"; } ?>
+                                    </td>
+
+                                    <td>
+
                                 </tr>
 
                                 <?php }?>

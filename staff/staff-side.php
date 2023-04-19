@@ -76,8 +76,9 @@
                         <span>Task</span>
                     </a>
                     <ul>
-                        <li><a href="addtask.php">Add Task</a></li>
-                        <li><a href="viewtask.php">View Task</a></li>
+                        <li><a href="report.php">Daily Report</a></li>
+                        <li><a href="viewtask.php">View Assigned Task</a></li>
+                        <li><a href="viewcomplete.php">View Completed Task</a></li>
 
                         <br><br><br><br><br><br><br><br><br><br>
 

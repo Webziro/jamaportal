@@ -78,7 +78,8 @@
                     <ul>
                         <li><a href="addtask.php">Add Task</a></li>
                         <li><a href="viewtask.php">View Task</a></li>
-
+                        <li><a href="createuser.php">Create Users</a></li>
+                        <li><a href="allusers.php">Manage Users</a></li>
                         <li><a href="timelog.php">Time Log</a>
 
 

@@ -117,7 +117,7 @@
 
                             <?php
 								
-							$recentQuery = mysqli_query($conn, "SELECT * FROM sys_tasK WHERE assigned_to = '$sid'");
+							$recentQuery = mysqli_query($conn, "SELECT * FROM sys_tasK WHERE assigned_to = '$sid' ORDER BY 'date_started' DESC LIMIT 8");
 							// if (!$recentQuery) {
 							// 	echo ('Error'. mysqli_error($conn));
 							// 	exit();

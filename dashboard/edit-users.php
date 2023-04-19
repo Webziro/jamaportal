@@ -3,31 +3,24 @@
     include_once "includes/conn.php";
     include_once "includes/loginsession.php";
     include_once "includes/dash-sidebar.php";
-?>
-
-<?php
-    if(isset($_GET['editId'])){
-    $editId = $_GET['editId'];
-    $editQuery = mysqli_query($conn, "SELECT * FROM sys_task  WHERE task_id = '$editId'"); 
-    if(mysqli_num_rows($editQuery)>0){
-        $editResult = mysqli_fetch_assoc($editQuery);
+    if(isset($_GET['userId'])){
+    $userid = $_GET['userId'];
+    $userQuery = mysqli_query($conn, "SELECT * FROM sys_users  WHERE id = '$userid'"); 
+    if(mysqli_num_rows($userQuery)>0){
+        $userResult = mysqli_fetch_assoc($userQuery);
     }else{
         header("location: view-task.php");
     }
 }else{
     header("location: view-task.php");
 }
-
-
-
- if(isset($_POST['update'])){
-    $assigned = mysqli_real_escape_string($conn, $_POST['assigned_to']); 
-    $datestart = mysqli_real_escape_string($conn, $_POST['date-start']);
-    $dateend = mysqli_real_escape_string($conn, $_POST['date-end']);
-    $taskname = mysqli_real_escape_string($conn, $_POST['task-name']);
-    $comments = mysqli_real_escape_string($conn, $_POST['comments']);
+if(isset($_POST['update'])){
+    $name = mysqli_real_escape_string($conn, $_POST['name']); 
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $department = mysqli_real_escape_string($conn, $_POST['dept']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
     //print_r($_POST['update']) or die();
-        $query = mysqli_query($conn, "UPDATE sys_task set assigned_to = '$assigned', date_started = '$datestart', date_end = '$dateend', task_name = '$taskname', comments = '$comments' where task_id = '$editId' ");
+        $query = mysqli_query($conn, "UPDATE sys_users  set full_name = '$name', user_name = '$username', department = '$department', user_password = '$password' where id = '$userid' ");
          //die(mysqli_error($conn));
             if($query){
                 $msg =  "<div class='alert alert-success'>Task Successfully Edited </div>";
@@ -51,7 +44,7 @@
 
                             <div class="modal-content cs_modal">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Edit Task</h5>
+                                    <h5 class="modal-title">Edit User Profile</h5>
                                 </div>
 
                                 <?php
@@ -66,42 +59,27 @@
 
 
                                         <div class="mb-3">
-                                            Task assigned to
-                                            <select type="text" class="form-control" name="assigned_to">
-                                                <?php
-                                                    $queryAssign = mysqli_query($conn, "SELECT * FROM sys_users where roles!='admin'"); 
-                                                    //die(mysqli_error($conn));
-                                                    while($rowsAssign = mysqli_fetch_array($queryAssign)){
-                                                ?>
-
-                                                <option value="<?php echo $rowsAssign['id'];?>">
-                                                    <?php echo $rowsAssign['user_name'];?></option>
-
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-
-
-                                        <div class="mb-3">
-                                            Start Date
-                                            <input type="date" class="form-control" name="date-start"
-                                                min="<?php echo date('Y-m-d'); ?>">
+                                            Name
+                                            <input type="text" class="form-control" name="name"
+                                                value="<?php echo $userResult['full_name'];?>">
                                         </div>
 
                                         <div class="mb-3">
-                                            End Date
-                                            <input type="date" class="form-control" name="date-end"
-                                                min="<?php echo date('Y-m-d'); ?>">
+                                            User Name
+                                            <input type="text" class="form-control" name="username"
+                                                value="<?php echo $userResult['user_name'];?>">
                                         </div>
 
+                                        <div class="mb-3">
+                                            Department
+                                            <input type="text" class="form-control" name="dept"
+                                                value="<?php echo $userResult['department'];?>">
+                                        </div>
 
-                                        Enter Task<textarea name="task-name" id="" cols="30" rows="10"
-                                            class="form-control" class="mb-3"
-                                            placeholder=""><?php echo $editResult['task_name'];?> </textarea>
-
-
-                                        <div class="cs_check_box">
-                                            <input type="checkbox" id="check_box" class="common_checkbox">
+                                        <div class="mb-3">
+                                            Password
+                                            <input type="text" class="form-control" name="password"
+                                                value="<?php echo $userResult['user_password'];?>">
                                         </div>
 
                                         <input type="submit" name="update"
@@ -129,7 +107,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="footer_iner text-center">
-                        <p>2020 © Influence - Designed by <a href="#"> <i class="ti-heart"></i> </a><a href="#">
+                        <p>2020 © Jamasoft<a href="#"> <i class="ti-heart"></i> </a><a href="#">
                                 Dashboard</a></p>
                     </div>
                 </div>

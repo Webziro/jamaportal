@@ -6,16 +6,14 @@
 
  
   if(isset($_POST['submit'])){
-    $taskassignto = mysqli_real_escape_string($conn, $_POST['assigned_to']);
-    $taskcontent = mysqli_real_escape_string($conn, $_POST['task-name']);
-    $startdate = mysqli_real_escape_string($conn, $_POST['date-start']);
-    $enddate = mysqli_real_escape_string($conn, $_POST['date-end']);
+    $title = mysqli_real_escape_string($conn, $_POST['title']);
+    $comment = mysqli_real_escape_string($conn, $_POST['comment']);
     //print_r($_POST) or die();
-  if(empty($taskassignto) or empty($taskcontent) or empty($startdate) or empty($enddate)){
+  if(empty($title) or empty($comment)){
         $msg = "<div class='alert alert-success'>Fill all fields please </div>";
         
   }else{
-      $queryTask = mysqli_query($conn, "INSERT INTO sys_task (assigned_to, task_name, date_started, date_end) 
+      $queryReport = mysqli_query($conn, "INSERT INTO sys_task (assigned_to, task_name, date_started, date_end) 
       VALUES ('$taskassignto', '$taskcontent', '$startdate', '$enddate')");
       if($queryTask){
       $msg = "<div style= 'alert alert-success'>Successfully Posted</div>";
@@ -39,7 +37,7 @@
 
                             <div class="modal-content cs_modal">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Create A Task</h5>
+                                    <h5 class="modal-title">Report a Task</h5>
                                 </div>
 
                                 <?php
@@ -52,43 +50,19 @@
                                 <div class="modal-body">
                                     <form action="" method="POST">
 
-
                                         <div class="mb-3">
-                                            Task assigned to
-                                            <select type="text" class="form-control" name="assigned_to">
-                                                <?php
-                                                    $queryAssign = mysqli_query($conn, "SELECT * FROM sys_users"); 
-                                                    //die(mysqli_error($conn));
-                                                    while($rowsAssign = mysqli_fetch_array($queryAssign)){
-                                                ?>
+                                            Date
+                                            <input type="date" class="form-control" name="date-start" min="">
 
-                                                <option value="<?php echo $rowsAssign['id'];?>">
-                                                    <?php echo $rowsAssign['user_name'];?></option>
-
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-
-
-                                        <div class="mb-3">
-                                            Start Date
-                                            <input type="date" class="form-control" name="date-start"
-                                                min="<?php echo date('Y-m-d'); ?>">
                                         </div>
 
                                         <div class="mb-3">
-                                            End Date
-                                            <input type="date" class="form-control" name="date-end"
-                                                min="<?php echo date('Y-m-d'); ?>">
+                                            Title
+                                            <input type="text" class="form-control" name="title">
                                         </div>
 
-                                        Enter Task<textarea name="task-name" id="" cols="30" rows="10"
+                                        Enter Comment<textarea name="comment" id="" cols="30" rows="10"
                                             class="form-control" class="mb-3" placeholder=""> </textarea>
-
-
-                                        <div class="cs_check_box">
-                                            <input type="checkbox" id="check_box" class="common_checkbox">
-                                        </div>
 
                                         <input type="submit" name="submit"
                                             class="btn_1 full_width text-center form-control">
