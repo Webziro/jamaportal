@@ -65,7 +65,7 @@ ob_start();
                         <table class="table lms_table_active">
                             <thead>
                                 <tr>
-                                    <th scope="col">Task Title</th>
+                                    <th scope="col">Task Title </a></th>
                                     <th scope="col">Date Started</th>
                                     <th scope="col">Date to Complete </th>
                                     <th scope="col">Status</th>
@@ -85,7 +85,7 @@ ob_start();
 
 
                                 <tr>
-                                    <td scope="row"> <a href="#"
+                                    <td scope="row"> <a href="staffchart.php"
                                             class="question_content"><?php echo $rowTable['task_name'];?> </a>
                                     </td>
 
@@ -96,19 +96,20 @@ ob_start();
 
 
                                     <td>
-                                        <a href="#" class="">
 
-                                            <select id="status" name="status">
-                                                <option <?php if($rowTable['task_status']=='P'){ echo 'selected'; } ?>
-                                                    value="P"> Pending
-                                                </option>
-                                                <option <?php if($rowTable['task_status']=='PR'){ echo 'selected'; } ?>
-                                                    value="PR">Processing
-                                                </option>
-                                                <option <?php if($rowTable['task_status']=='A'){ echo 'selected'; } ?>
-                                                    value="A">Approved</option>
-                                            </select>
-                                        </a>
+                                        <select id="status" name="status">
+                                            <option <?php if($rowTable['task_status']=='P'){ echo 'selected'; } ?>
+                                                value="P"> Pending
+                                            </option>
+
+                                            <option <?php if($rowTable['task_status']=='PR'){ echo 'selected'; } ?>
+                                                value="PR">Processing
+                                            </option>
+
+                                            <option <?php if($rowTable['task_status']=='A'){ echo 'selected'; } ?>
+                                                value="A">Approved</option>
+                                        </select>
+
                                     </td>
 
                                     <td>
@@ -118,7 +119,7 @@ ob_start();
                                     <td>
                                         <?php 
                                         $rid=$rowTable['task_id']; 
-                                        $r=mysqli_query($conn, "SELECT * FROM sys_rating WHERE task=$rid"); 
+                                        $r=mysqli_query($conn, "SELECT * FROM sys_rating WHERE task=$rid ORDER BY rating_id desc"); 
                                             if(mysqli_num_rows($r)>0){
                                             $rdata = mysqli_fetch_assoc($r);
                                         ?>
@@ -152,6 +153,8 @@ ob_start();
                                         </select>
                                         <?php } ?>
                                     </td>
+
+
 
                                     <td>
                                         <!-- Button to Open the Modal -->

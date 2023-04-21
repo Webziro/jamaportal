@@ -102,8 +102,6 @@
             <!-- End of  Task Loop-->
 
 
-
-
             <div class="col-xl-12   ">
                 <div class="white_box card_height_100">
                     <div class="box_header border_bottom_1px  ">
@@ -127,7 +125,8 @@
                 </div>
             </div>
 
-
+            <!--bar Chart-->
+            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
             <div class="footer_part">
                 <div class="container">
@@ -142,8 +141,6 @@
                 </div>
             </div>
             </section>
-
-
 
             <script src="js/jquery1-3.4.1.min.js"></script>
 
@@ -188,8 +185,12 @@
             <script src="js/custom.js"></script>
             <script src="vendors/apex_chart/bar_active_1.js"></script>
             <script src="vendors/apex_chart/apex_chart_list.js"></script>
+
+            <!--Bar Chart -->
             </body>
 
-            <!-- Mirrored from demo.dashboardpack.com/hospital-html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Mar 2023 11:45:05 GMT -->
-
             </html>
+
+
+
+            <!--Bar Chart -->

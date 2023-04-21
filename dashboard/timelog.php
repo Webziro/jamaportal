@@ -56,6 +56,7 @@
                         <table class="table lms_table_active">
                             <thead>
                                 <tr>
+                                    <th scope="col">Name</th>
                                     <th scope="col">Today's Date</th>
                                     <th scope="col">Time Checked in</th>
                                     <th scope="col">Time Checked Out </th>
@@ -65,13 +66,16 @@
                             </thead>
                             <tbody>
                                 <?php                                            
-                                    $querytimelog = mysqli_query($conn, "SELECT * FROM sys_log where user_id = '$id'"); 
+                                    $querytimelog = mysqli_query($conn, "SELECT * FROM sys_log 
+                                    where user_id = '$id' ORDER BY log_id 
+                                    desc limit 1") or die(mysqli_error($conn)); 
                                     while($rowTime = mysqli_fetch_array($querytimelog)){
                                 ?>
                                 <tr>
 
 
                                 <tr>
+                                    <td><?php echo $rowTime['log_id'] ?></td>
                                     <th scope="row">
                                         <a href="#" class="question_content"><?php echo date('Y:m:d'); ?>
                                         </a>

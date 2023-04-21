@@ -46,6 +46,50 @@
 
         <link rel="stylesheet" href="../assets/dash-css/style1.css" />
         <link rel="stylesheet" href="../assets/dash-css/colors/default.css" id="colorSkinCSS">
+
+
+        <!--Bar Chart-->
+        <script type="text/javascript">
+        window.onload = function() {
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                theme: "light1", // "light2", "dark1", "dark2"
+                animationEnabled: false, // change to true		
+                title: {
+                    text: "Basic Column Chart"
+                },
+                data: [{
+                    // Change type to "bar", "area", "spline", "pie",etc.
+                    type: "column",
+                    dataPoints: [{
+                            label: "vine",
+                            y: 16
+                        },
+                        {
+                            label: "orange",
+                            y: 40
+                        },
+                        {
+                            label: "banana",
+                            y: 25
+                        },
+                        {
+                            label: "mango",
+                            y: 30
+                        },
+                        {
+                            label: "grape",
+                            y: 18
+                        }
+                    ]
+                }]
+            });
+            chart.render();
+
+        }
+        </script>
+
+
     </head>
 
     <body class="crm_body_bg">
@@ -150,9 +194,6 @@
                 </div>
             </div>
 
-
-
-
             <script src="../assets/vendor/jquery1-3.4.1.min.js"></script>
 
             <script src="../assets/dash-js/popper1.min.js"></script>
@@ -182,7 +223,6 @@
             <script src="assets/dash-js/chart.min.js"></script>
 
             <script src="assets/dash-vendors/tagsinput/tagsinput.js"></script>
-
 
             <script src="assets/dash-js/custom.js"></script>
     </body>
