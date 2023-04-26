@@ -30,10 +30,21 @@
         $query = mysqli_query($conn, "UPDATE sys_task set assigned_to = '$assigned', date_started = '$datestart', date_end = '$dateend', task_name = '$taskname', comments = '$comments' where task_id = '$editId' ");
          //die(mysqli_error($conn));
             if($query){
-                $msg =  "<div class='alert alert-success'>Task Successfully Edited </div>";
-                
+                   $msg =   "<script>
+                                Swal.fire(
+                                    'Great!',
+                                    'Sucessfully Updated!',
+                                    'success')
+                            </script>";
+                                
             }else{
-                $msg =  "<div class='alert alert-success'>System Error, Try again! </div>";
+                $msg =  "<script>
+                                Swal.fire(
+                                    'Try again!',
+                                    'Could not be updated!',
+                                    'error')
+                            </script>";
+                                
             }
         }
 
@@ -141,7 +152,5 @@
 
 
     </body>
-
-    <!-- Mirrored from demo.dashboardpack.com/hospital-html/resister.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Mar 2023 11:46:17 GMT -->
 
     </html>

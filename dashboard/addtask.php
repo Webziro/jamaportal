@@ -12,16 +12,31 @@
     $enddate = mysqli_real_escape_string($conn, $_POST['date-end']);
     //print_r($_POST) or die();
   if(empty($taskassignto) or empty($taskcontent) or empty($startdate) or empty($enddate)){
-        $msg = "<div class='alert alert-success'>Fill all fields please </div>";
+    $msg = "<script>
+     Swal.fire(
+            'Empty Field!',
+            'Please fill all Fields!',
+            'error')
+            </script>";
         
   }else{
       $queryTask = mysqli_query($conn, "INSERT INTO sys_task (assigned_to, task_name, date_started, date_end) 
       VALUES ('$taskassignto', '$taskcontent', '$startdate', '$enddate')");
       if($queryTask){
-      $msg = "<div style= 'alert alert-success'>Successfully Posted</div>";
+            $msg = "<script>
+            Swal.fire(
+                    'Good Job!',
+                    'Successfully Posted!',
+                    'success')
+                    </script>";
 
       }else{
-      $msg = "<div class='alert alert-success'>Couldn't post at the moment. Try again! </div>";   
+            $msg =  "<script>
+                Swal.fire(
+                    'Network error!',
+                    'Couldn't post at the moment. Try again! !',
+                    'error')
+                    </script>";
   }
 }
 }

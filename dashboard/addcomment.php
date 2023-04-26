@@ -7,17 +7,34 @@
         $comments = mysqli_real_escape_string($conn, $_POST['comments']);
         //print_r($_POST) or die();
         if(empty($taskid) or empty($comments)){
-            $_SESSION['msg'] = "<div class='alert alert-success'>Fill all fields please </div>";  
+            $_SESSION['msg'] = "<script>
+                                Swal.fire(
+                                    'Empty!',
+                                    'Fill all fields please !',
+                                    'error')
+                            </script>";
             header("location:viewtask.php");
         }else{
         $queryComments = mysqli_query($conn, "INSERT INTO comments(taskid, comment) VALUES('$taskid', '$comments')");
         //die (mysqli_error($conn));
         if($queryComments){
-            $_SESSION['msg'] = "<div class='alert alert-success'>Comments Posted</div>";  
+            $_SESSION['msg'] = "<script>
+                                    Swal.fire(
+                                        'Great!',
+                                        'Comments Posted !',
+                                        'success')
+                                 </script>"; 
+                                 
             header("location:viewtask.php");
 
         }else{
-        $_SESSION['msg'] = "<div class='alert alert-success'>Couldn't post at the moment. Try again! </div>";   
+        $_SESSION['msg'] = "<script>
+                                Swal.fire(
+                                    'Failed!',
+                                    'Couldn't post at the moment. Try again !',
+                                    'error')
+                            </script>"; 
+                               
             header("location:viewtask.php");
         }
         

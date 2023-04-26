@@ -47,6 +47,10 @@
         <link rel="stylesheet" href="../assets/dash-css/style1.css" />
         <link rel="stylesheet" href="../assets/dash-css/colors/default.css" id="colorSkinCSS">
 
+        <!-- Sweet Alert -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" id="theme-styles">
+
 
         <!--Bar Chart-->
         <script type="text/javascript">
@@ -225,6 +229,8 @@
             <script src="assets/dash-vendors/tagsinput/tagsinput.js"></script>
 
             <script src="assets/dash-js/custom.js"></script>
+
+
     </body>
 
 </html>

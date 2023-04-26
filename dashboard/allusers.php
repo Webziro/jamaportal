@@ -36,7 +36,7 @@
                             <div class="serach_field_2">
                                 <div class="search_inner">
 
-                                    <form Active="#" action="searchtask.php" method="POST">
+                                    <form Active="#" action="searchusers.php" method="POST">
                                         <div class="search_field">
                                             <input type="text" name="search" placeholder="Search content here...">
                                         </div>
